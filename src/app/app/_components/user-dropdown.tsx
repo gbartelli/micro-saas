@@ -18,7 +18,7 @@ import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 
 type MainSidebarProps = {
-  user: Session["user"];
+  user: Session["user"] | undefined;
 };
 
 export function UserDropdown({ user }: MainSidebarProps) {
