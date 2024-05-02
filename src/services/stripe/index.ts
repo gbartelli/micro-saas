@@ -1,7 +1,7 @@
-import { config } from "@/config";
 import Stripe from "stripe";
+
+import { config } from "@/config";
 import { prisma } from "../database";
-import { string } from "zod";
 
 export const stripe = new Stripe(config.stripe.secretKey || "", {
   apiVersion: "2024-04-10",
@@ -17,7 +17,7 @@ export const createStripeCustomer = async (input: {
   name?: string;
   email: string;
 }) => {
-  let customer = await getStripeCustomerByEmail(input.email);
+  const customer = await getStripeCustomerByEmail(input.email);
   if (customer) return customer;
 
   const createdCustomer = await stripe.customers.create({
@@ -29,6 +29,7 @@ export const createStripeCustomer = async (input: {
     customer: createdCustomer.id,
     items: [{ price: config.stripe.plans.free.priceId }],
   });
+
   await prisma.user.update({
     where: {
       email: input.email,
@@ -40,6 +41,8 @@ export const createStripeCustomer = async (input: {
       stripePriceId: config.stripe.plans.free.priceId,
     },
   });
+
+  return createdCustomer;
 };
 
 export const createCheckoutSession = async (
@@ -48,7 +51,7 @@ export const createCheckoutSession = async (
   userStripeSubscriptionId: string
 ) => {
   try {
-    let customer = await createStripeCustomer({
+    const customer = await createStripeCustomer({
       email: userEmail,
     });
 
