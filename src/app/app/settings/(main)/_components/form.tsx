@@ -28,7 +28,7 @@ import { updateProfileSchema } from "../schema";
 import { toast } from "sonner";
 
 type ProfileFormProps = {
-  defaultValues: Session["user"];
+  defaultValues: Session["user"] | undefined;
 };
 
 export function ProfileForm({ defaultValues }: ProfileFormProps) {
