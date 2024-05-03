@@ -11,7 +11,7 @@ const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
 }) => {
   const loginWithGoogle = () =>
     signIn("google", {
-      callbackUrl: "http://kronos-5xn90h5nr-gbartellis-projects.vercel.app/app",
+      callbackUrl: "http://kronos-pro.vercel.app/app",
     });
 
   return (
