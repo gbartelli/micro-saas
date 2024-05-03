@@ -1,2 +1,2 @@
 import { transporter } from "@/services/auth";
-export { transporter, GET, POST } from "@/services/auth";
+export { GET, POST } from "@/services/auth";
