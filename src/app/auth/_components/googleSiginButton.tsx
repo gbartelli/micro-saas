@@ -10,7 +10,9 @@ const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   children,
 }) => {
   const loginWithGoogle = () =>
-    signIn("google", { callbackUrl: "http://localhost:3000/app" });
+    signIn("google", {
+      callbackUrl: "http://kronos-5xn90h5nr-gbartellis-projects.vercel.app/app",
+    });
 
   return (
     <Button onClick={loginWithGoogle} className="w-full">
