@@ -25,8 +25,9 @@ export function AuthForm() {
       );
     } catch (error) {
       toast.error("An error ocurred. Please try again.");
-      console.log(signIn);
     }
+    console.log(handleSubmit);
+    console.log(signIn);
   });
   return (
     <form
