@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "../database";
 import { createStripeCustomer } from "../stripe";
 import nodemailer from "nodemailer";
+import GoogleProvider from "next-auth/providers/google";
 
 export const transporter = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
@@ -29,6 +30,10 @@ export const {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
     EmailProvider({
       server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,

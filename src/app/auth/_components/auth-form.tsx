@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+import GoogleSignInButton from "./googleSiginButton";
+import { Children } from "react";
 
 export function AuthForm() {
   const form = useForm();
@@ -26,8 +28,6 @@ export function AuthForm() {
     } catch (error) {
       toast.error("An error ocurred. Please try again.");
     }
-    console.log(handleSubmit);
-    console.log(signIn);
   });
   return (
     <form
@@ -47,18 +47,22 @@ export function AuthForm() {
             <Input
               id="email"
               placeholder="m@example.com"
-              required
               type="email"
               {...form.register("email")}
             />
           </div>
-          <Button
-            className="w-full"
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Sending..." : "Send magic link"}
-          </Button>
+          <div>
+            <Button
+              className="w-full"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? "Sending..." : "Send magic link"}
+            </Button>
+          </div>
+          <div>
+            <GoogleSignInButton>Login With Google</GoogleSignInButton>
+          </div>
         </CardContent>
       </Card>
     </form>
