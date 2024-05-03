@@ -62,14 +62,15 @@ export const createCheckoutSession = async (
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customer.id,
-      return_url: "http://localhost:3000/app/settings/billing",
+      return_url:
+        "http://kronos-5xn90h5nr-gbartellis-projects.vercel.app/app/settings/billing",
       flow_data: {
         type: "subscription_update_confirm",
         after_completion: {
           type: "redirect",
           redirect: {
             return_url:
-              "http://localhost:3000/app/settings/billing?success=true",
+              "http://kronos-5xn90h5nr-gbartellis-projects.vercel.app/app/settings/billing?success=true",
           },
         },
         subscription_update_confirm: {
