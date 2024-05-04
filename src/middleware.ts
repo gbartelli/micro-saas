@@ -98,5 +98,5 @@ export default middleware(
   }
 );
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!_next).*)(.+)"],
 };
