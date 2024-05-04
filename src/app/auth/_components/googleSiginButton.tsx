@@ -9,7 +9,10 @@ interface GoogleSignInButtonProps {
 const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   children,
 }) => {
-  const loginWithGoogle = () => signIn("google");
+  const loginWithGoogle = () =>
+    signIn("google", {
+      callbackUrl: "http://kronos-pro.vercel.app/app",
+    });
 
   return (
     <Button onClick={loginWithGoogle} className="w-full">

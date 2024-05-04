@@ -62,6 +62,14 @@ export function AuthForm() {
           </div>
           <div>
             <GoogleSignInButton>Login With Google</GoogleSignInButton>
+            <button
+              type="button"
+              onClick={() => {
+                signIn("google");
+              }}
+            >
+              Google
+            </button>
           </div>
         </CardContent>
       </Card>
