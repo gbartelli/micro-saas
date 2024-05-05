@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 "use client";
 
 import {
@@ -16,22 +17,75 @@ import { toast } from "sonner";
 import GoogleSignInButton from "./googleSiginButton";
 import { Children } from "react";
 
+const nodemailer = require("nodemailer");
+
+const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const requestBody = {
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    email: formData.get("email"),
+    message: formData.get("message"),
+  };
+
+  const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.gmail.com",
+    auth: {
+      user: "myEmail@gmail.com",
+      pass: "password",
+    },
+    secure: true,
+  });
+
+  await new Promise((resolve, reject) => {
+    transporter.verify(function (error: any, success: unknown) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
+
+  const mailData = {
+    from: {
+      name: `${requestBody.firstName} ${requestBody.lastName}`,
+      address: "myEmail@gmail.com",
+    },
+    replyTo: requestBody.email,
+    to: "recipient@gmail.com",
+    subject: `form message`,
+    text: requestBody.message,
+    html: `${requestBody.message}`,
+  };
+
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailData, (err: any, info: unknown) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(info);
+        resolve(info);
+      }
+    });
+  });
+
+  console.log("Form submitted successfully");
+};
+
+export default handleFormSubmit;
+
 export function AuthForm() {
   const form = useForm();
 
-  const handleSubmit = form.handleSubmit(async (data) => {
-    try {
-      await signIn("nodemailer", { email: data.email, redirect: false });
-      toast.success(
-        "Magic Link Sent. Check your email for the magic link to log in."
-      );
-    } catch (error) {
-      toast.error("An error ocurred. Please try again.");
-    }
-  });
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       className="flex justify-center items-center h-screen"
     >
       <Card className="w-full max-w-md mx-auto justify-center items-center ">
