@@ -30,11 +30,11 @@ const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   };
 
   const transporter = nodemailer.createTransport({
-    port: 465,
-    host: "smtp.gmail.com",
+    port: 2525,
+    host: "sandbox.smtp.mailtrap.io",
     auth: {
-      user: "myEmail@gmail.com",
-      pass: "password",
+      user: "210d8d2c0e4767",
+      pass: "ef747aa6ee75cb",
     },
     secure: true,
   });
