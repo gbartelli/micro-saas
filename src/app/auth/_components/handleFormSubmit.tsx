@@ -47,6 +47,7 @@ const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   };
 
   await new Promise((resolve, reject) => {
+    // send mail
     transporter.sendMail(mailData, (err: any, info: unknown) => {
       if (err) {
         console.error(err);
