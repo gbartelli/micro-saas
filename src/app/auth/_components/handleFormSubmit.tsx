@@ -58,7 +58,7 @@ const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     });
   });
 
-  console.log("Form submitted successfully");
+  console.log("Email sent successfully");
 };
 
 export default handleFormSubmit;
