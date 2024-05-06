@@ -19,7 +19,7 @@ export const config = {
 }
  */
 
-/* CONFIG ANTIGA VOLTAR
+/* CONFIG ANTIGA
 import { NextRequest, NextResponse } from "next/server";
 import { getUrl } from "./lib/get-url";
 
@@ -33,7 +33,7 @@ export function middleware(request: NextRequest) {
     pathname,
   }); NAO VOLTAR */
 
-/* CONFIG ANTIGA VOLTAR
+/* CONFIG ANTIGA
   if (pathname === "/auth" && token) {
     return NextResponse.redirect(new URL(getUrl("/app")));
   }

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 "use client";
 
 import {
@@ -16,14 +15,23 @@ import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import GoogleSignInButton from "./googleSiginButton";
 import { Children } from "react";
-import handleFormSubmit from "./handleFormSubmit";
 
 export function AuthForm() {
   const form = useForm();
 
+  const handleSubmit = form.handleSubmit(async (data) => {
+    try {
+      await signIn("nodemailer", { email: data.email, redirect: false });
+      toast.success(
+        "Magic Link Sent. Check your email for the magic link to log in."
+      );
+    } catch (error) {
+      toast.error("An error ocurred. Please try again.");
+    }
+  });
   return (
     <form
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
       className="flex justify-center items-center h-screen"
     >
       <Card className="w-full max-w-md mx-auto justify-center items-center ">
@@ -54,14 +62,6 @@ export function AuthForm() {
           </div>
           <div>
             <GoogleSignInButton>Login With Google</GoogleSignInButton>
-            <button
-              type="button"
-              onClick={() => {
-                signIn("google");
-              }}
-            >
-              Google
-            </button>
           </div>
         </CardContent>
       </Card>
