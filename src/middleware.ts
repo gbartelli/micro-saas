@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   console.log(process.env.NODE_ENV);
 
   // Construir o nome do cookie usando o prefixo determinado
-  const cookieName = "${cookiePrefix}authjs.session-token";
+  const cookieName = "{cookiePrefix}authjs.session-token";
 
   // Obter o token do cookie usando o nome do cookie construído
   const token = request.cookies.get(cookieName);
