@@ -38,11 +38,12 @@ import { useRouter } from "next/navigation";
 import { deleteTodo, upsertTodo } from "../actions";
 import { toast } from "sonner";
 
-type TodoDataTable = {
+type TodoDataTableProps = {
   data: Todo[];
+  onTodoClick: (todo: Todo) => void;
 };
 
-export function TodoDataTable({ data }: TodoDataTable) {
+export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
   const router = useRouter();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -64,6 +65,9 @@ export function TodoDataTable({ data }: TodoDataTable) {
     router.refresh();
     toast.success("The todo item has been successfully updated.");
   };
+
+  const [selectedTodo, setSelectedTodo] = React.useState<Todo | null>(null);
+
   const columns: ColumnDef<Todo>[] = [
     {
       accessorKey: "status",
@@ -185,6 +189,7 @@ export function TodoDataTable({ data }: TodoDataTable) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onTodoClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -236,3 +241,13 @@ export function TodoDataTable({ data }: TodoDataTable) {
     </div>
   );
 }
+
+export const selectedTodo: Todo | null = null;
+export const setSelectedTodo: React.Dispatch<
+  React.SetStateAction<Todo | null>
+> = () => {};
+
+// Convert handleTodoClick to a named export
+export const handleTodoClick = (todo: Todo) => {
+  setSelectedTodo(todo);
+};
