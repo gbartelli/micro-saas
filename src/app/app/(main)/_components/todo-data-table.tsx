@@ -247,7 +247,6 @@ export const setSelectedTodo: React.Dispatch<
   React.SetStateAction<Todo | null>
 > = () => {};
 
-// Convert handleTodoClick to a named export
 export const handleTodoClick = (todo: Todo) => {
   setSelectedTodo(todo);
 };
