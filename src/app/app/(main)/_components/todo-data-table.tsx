@@ -37,6 +37,7 @@ import { Todo } from "../types";
 import { useRouter } from "next/navigation";
 import { deleteTodo, upsertTodo } from "../actions";
 import { toast } from "sonner";
+import { TodoModalOnClick } from "./todo-modal-onclick";
 
 type TodoDataTableProps = {
   data: Todo[];
@@ -98,7 +99,7 @@ export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
     },
     {
       accessorKey: "createdAt",
-      header: () => <div className="text-right">createdAt</div>,
+      header: () => <div className="text-right">Created At</div>,
       cell: ({ row }) => {
         return (
           <div className="text-right font-medium">
@@ -114,29 +115,48 @@ export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
         const Todo = row.original;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="link" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(Todo.id)}
-              >
-                Copy todo ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleToggleDoneTodo(Todo)}>
-                Mark as done
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDeleteTodo(Todo)}>
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex">
+            <DropdownMenu>
+              <div className="mr-12 ml-10">
+                <TodoModalOnClick
+                  todo={{
+                    id: "",
+                    title: "",
+                    userId: "",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    doneAt: null,
+                  }}
+                ></TodoModalOnClick>
+              </div>
+              <DropdownMenuTrigger asChild>
+                <Button variant="link" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => TodoModalOnClick({ todo: Todo })}
+                >
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => navigator.clipboard.writeText(Todo.id)}
+                >
+                  Copy todo ID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleToggleDoneTodo(Todo)}>
+                  Mark as done
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDeleteTodo(Todo)}>
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         );
       },
     },
