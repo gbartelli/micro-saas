@@ -6,6 +6,11 @@ export const upsertTodoSchema = z.object({
   doneAt: z.date().optional().nullable(),
 });
 
+export const editTodoSchema = z.object({
+  id: z.string().optional().nullable(),
+  title: z.string().optional().nullable(),
+});
+
 export const deleteTodoSchema = z.object({
   id: z.string(),
 });
