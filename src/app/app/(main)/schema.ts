@@ -7,7 +7,7 @@ export const upsertTodoSchema = z.object({
 });
 
 export const editTodoSchema = z.object({
-  id: z.string().optional().nullable(),
+  id: z.string().optional(),
   title: z.string().optional().nullable(),
 });
 

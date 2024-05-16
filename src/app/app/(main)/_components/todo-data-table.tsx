@@ -35,13 +35,25 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Todo } from "../types";
 import { useRouter } from "next/navigation";
-import { deleteTodo, upsertTodo } from "../actions";
+import { deleteTodo, updateTodo, upsertTodo } from "../actions";
 import { toast } from "sonner";
 import { TodoModalOnClick } from "./todo-modal-onclick";
+import router from "next/router";
+import { TodoModal } from "./modal";
 
 type TodoDataTableProps = {
   data: Todo[];
   onTodoClick: (todo: Todo) => void;
+};
+
+export const handleUpdateTodo = async (todo: Todo) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter();
+  await updateTodo({ id: todo.id, title: todo.title });
+  console.log(updateTodo, todo.title);
+
+  router.refresh();
+  toast("The todo item has been successfully deleted.");
 };
 
 export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
@@ -118,16 +130,7 @@ export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
           <div className="flex">
             <DropdownMenu>
               <div className="mr-12 ml-10">
-                <TodoModalOnClick
-                  todo={{
-                    id: "",
-                    title: "",
-                    userId: "",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    doneAt: null,
-                  }}
-                ></TodoModalOnClick>
+                <TodoModalOnClick></TodoModalOnClick>
               </div>
               <DropdownMenuTrigger asChild>
                 <Button variant="link" className="h-8 w-8 p-0">
@@ -137,11 +140,6 @@ export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() => TodoModalOnClick({ todo: Todo })}
-                >
-                  Edit
-                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => navigator.clipboard.writeText(Todo.id)}
                 >
@@ -153,6 +151,9 @@ export function TodoDataTable({ data, onTodoClick }: TodoDataTableProps) {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleDeleteTodo(Todo)}>
                   Delete
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleUpdateTodo(Todo)}>
+                  Edit
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -268,5 +269,6 @@ export const setSelectedTodo: React.Dispatch<
 > = () => {};
 
 export const handleTodoClick = (todo: Todo) => {
+  TodoModal;
   setSelectedTodo(todo);
 };

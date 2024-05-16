@@ -1,9 +1,10 @@
 "use server";
 
-import { deleteTodoSchema, upsertTodoSchema } from "./schema";
+import { deleteTodoSchema, editTodoSchema, upsertTodoSchema } from "./schema";
 import { prisma } from "./../../../services/database/index";
 import { auth } from "@/services/auth";
 import { z } from "zod";
+import { log } from "console";
 
 export async function getUserTodos() {
   const session = await auth();
@@ -115,4 +116,51 @@ export async function deleteTodo(input: z.infer<typeof deleteTodoSchema>) {
     error: null,
     data: "Todo deleted successfully",
   };
+}
+
+export async function updateTodo(input: z.infer<typeof editTodoSchema>) {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return {
+      error: "Not authorized",
+      data: null,
+    };
+  }
+
+  const todo = await prisma.todo.findUnique({
+    where: {
+      id: input.id,
+      title: input.title || "",
+      userId: session?.user?.id,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!todo) {
+    return {
+      error: "Not found",
+      data: null,
+    };
+  }
+
+  const updatedTodo = await prisma.todo.update({
+    where: {
+      id: input.id,
+      userId: session?.user?.id,
+    },
+    data: {
+      title: input.title || "",
+    },
+  });
+  console.log(updateTodo);
+
+  return {
+    error: null,
+    data: updatedTodo,
+  };
+  console.log(updateTodo);
+  console.log(todo);
 }

@@ -36,7 +36,7 @@ type TodoModalOnClick = {
   defaultValue?: Todo;
 };
 
-export function TodoModalOnClick({ children }: TodoModalOnClick) {
+export function TodoModal({ children }: TodoModalOnClick) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const form = useForm({
@@ -55,12 +55,6 @@ export function TodoModalOnClick({ children }: TodoModalOnClick) {
   });
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <div ref={ref}>
-          {children}
-          <Button variant="outline">Edit</Button>
-        </div>
-      </DialogTrigger>
       <FormProvider {...form}>
         <form onSubmit={onSubmit}>
           <DialogContent className="sm:max-w-[425px]">
