@@ -11,7 +11,7 @@ import {
   DashboardSidebarNavHeaderTitle,
   DashboardSidebarFooter,
 } from "@/components/dashboard/sidebar";
-import { HomeIcon, MixerVerticalIcon } from "@radix-ui/react-icons";
+import { HomeIcon, MixerVerticalIcon, PersonIcon } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
 import { UserDropdown } from "./user-dropdown";
 import { Logo } from "@/components/logo";
@@ -38,14 +38,21 @@ export function MainSidebar({ user }: MainSidebarProps) {
           <DashboardSidebarNavMain>
             <DashboardSidebarNavLink href="/app" active={isActive("/app")}>
               <HomeIcon className="w-4 h-4 mr-4" />
-              Tarefas
+              Tasks
             </DashboardSidebarNavLink>
             <DashboardSidebarNavLink
               href="/app/settings"
               active={isActive("/app/settings")}
             >
               <MixerVerticalIcon className="w-4 h-4 mr-4" />
-              Configuracoes
+              Settings
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href="/app/collaborators"
+              active={isActive("/app/collaborators")}
+            >
+              <PersonIcon className="w-4 h-4 mr-4" />
+              Collaborators
             </DashboardSidebarNavLink>
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>
@@ -53,12 +60,12 @@ export function MainSidebar({ user }: MainSidebarProps) {
         <DashboardSidebarNav className="mt-auto">
           <DashboardSidebarNavHeader>
             <DashboardSidebarNavHeaderTitle>
-              Links Extras
+              Extra Links
             </DashboardSidebarNavHeaderTitle>
           </DashboardSidebarNavHeader>
           <DashboardSidebarNavMain>
             <DashboardSidebarNavLink href="/">
-              Precisa de Ajuda?
+              Need Help?
             </DashboardSidebarNavLink>
             <DashboardSidebarNavLink href="/">Site</DashboardSidebarNavLink>
           </DashboardSidebarNavMain>
